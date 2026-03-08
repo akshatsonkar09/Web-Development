@@ -1,0 +1,17 @@
+These are the mistakes,suggestions or tricks that I picked up during the making of this project
+
+css files should be in a class ie you should specifiy where they are applied eg-> body {...}
+
+while linking a css file to html file you have to use rel ie relation which tells about the kind of relation you have with linked sheet so for css it should be stylesheet
+
+when saving svg urls do not forget this line /*xmlns="http://www.w3.org/2000/svg"*/
+
+Instead of using links you should download and use it in your own
+
+You should not give universal background colour to your file instead use common css file
+
+VVV IMP ALways try to make changes in css file
+
+position rela
+
+You should put images url in html file and its styling in css file

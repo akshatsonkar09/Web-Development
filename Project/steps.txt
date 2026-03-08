@@ -1,0 +1,37 @@
+main background image ko lagaya aur usko dark kaarne ke liye peeche ek black box lagaya aur uska istemaal karke opacity badha ke usko dark kar diya
+
+aur isme position ko set kar diya position: absolute ie Place this element at an exact location on the page matlab hum log ise batayenge kahan par lagna hai and for position: relative It does not move .main anywhere. Instead it tells the browser: "If any child element(.box) uses position: absolute, position it relative to me(.main)"
+
+My netflix logo was black so I had to ask chatgpt for help and it gave me fill="#E50914" to put in my svg file and it solved the problem also. I had trouble in viewing file so I did open with within vs code and opened with text editor instead of preview
+
+email address wali jagah par email address text ko white karna tha jiske liye placeholder ka css change karna hota hai
+
+card banate samay maine cardfirst cardsecond bana raha tha but sab card same hi hai toh sirf card bana lo aur reuse karlo
+
+container me positiong relative karne se baar baar problem aa rahi thi ki left side ho jaa raha tha isko solve karne ke liye margin auto kardo aur zlign aur justify kO CENTER ME KAR DO
+
+(important detail)
+If you look closely the difference between my clone and real site is that in real site there is shade of purple centered around svgs 
+
+Yes — your eye caught the right detail. Netflix adds a soft radial glow behind the SVG icon, not just a flat background. That glow is what creates the purple light centered on the icon in the real site.
+
+Your clone only has a linear gradient on the card, so the icon sits on flat color. The real card has two layers:
+
+1) Card gradient background
+2) Radial glow centered behind the icon
+
+That second layer is the missing piece.
+(important detail)
+
+At first I was creating a class for my image and putting the images url in class but that reduces reusability and increases a class everytime I want to add a image.
+
+While making top 10 chatgpt gave we me an overfowX method to scroll but netflix uses a button which triggers tansitionX movement so I am going to try to replicate that. i dont know java so I dont want to use it but if I have to I will use it within html file and not in a separate js file
+
+Maine flashcard me padding di thi lekin mujhe apne flex ke cards me gapping chahiye jiski responsibility box ki honi chahiye naa ki card ki
+
+Another mistake was ki mai border radius flashcard par daal raha hun lekin woh flashcard img par hona chahiye
+
+Added some transitions in flashcard which I am not very good at but can make it for sure
+
+After a hefty process of making button  
+cursor:pointer measns on top of that cursor pointer because hand
