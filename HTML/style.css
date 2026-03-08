@@ -1,0 +1,25 @@
+body {
+    background-color: black;
+    color: white;
+    /*Hover cursor around the color block to use RGB coloring scheme*/
+}
+
+th,
+td {
+    border: 2px solid white;
+}
+
+.firstclass {
+    color: red;
+}
+
+/*. for class*/
+
+
+#firstdiv {
+    background-color: aquamarine;
+}
+
+/* # for div*/
+
+h5 {background-color: blue;}

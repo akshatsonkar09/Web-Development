@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forms</title>
+</head>
+
+<body>
+    <form action="post">
+    <h1>Form to apply for Test</h1>
+    <div>
+    <label for="username"> Enter your username</label>
+    <!-- label is for giving label, 'for' is for assigning to which id it is connected to (in this case label is connected to username) -->
+    <input type="text" id="username" name="username" placeholder="blank"><br>
+    </div>
+
+    <div>
+    Gender -
+    <input type="radio" id="male" name="gender" value="male">
+    <label for="male">Male</label>
+    <!-- Interchanging the label and nput will interchange the position of radio and name -->
+
+    <label for="female">Female</label>
+    <input type="radio" id="female" name="gender" value="female">
+
+    <!-- type mean what type of input you will give, id is to give unique text to it, name is tell which question it is part of (in this case it is connected to question called gender, it prevent from multi fill) , placeholder is what is written in the box -->
+    </div>
+
+    <div>
+        <label for="DOB"> Enter Date of Birth</label>
+        <input type="datetime-local" id="DOB">
+    </div>
+
+    <div>
+        <textarea name="comment" rows="3" cols="35">Tell about yourself.....</textarea>
+    </div>
+    <div>
+        <textarea name="new" id="test" placeholder="comment"></textarea>
+    </div>
+    <div>
+        <select name="fruits" id="fruits">
+            <option value="apple">Apple</option>
+            <option value="banana">Banana</option>
+            <option value="orange">Orange</option>
+        </select>
+    </div>
+    </form>
+
+</body>
+
+</html>

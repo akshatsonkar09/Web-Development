@@ -1,0 +1,211 @@
+<!DOCTYPE html> <!--For summoning basic syntax type ! then enter-->
+
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- (Neeche wala) This is the small text that is shown below the title when surfing. Chota wala text jo dikhta hai jisme content ki summary or such hota hai  -->
+    <meta name="description" content="This is a page about my web dev and lelouch along with death note">
+
+    <title>Lelouch Lamperouge</title>
+
+    <!-- Using CSS Selectors -->
+<!-- <style>
+    /* Element Selector  */
+    div {
+        background-color: red;
+    }
+
+
+    /* Class Selector */
+    .red{
+        background-color: red;
+    }
+
+
+        /*ID Selector  */
+
+    #green{
+        background-color: green;
+    }
+        
+    /* Child Selector */    //p  div ke exact andar hona chahiye uske beech me kuch aur nhi ho sakta hai
+    div> p {
+        background-color: brown;
+        color: blue
+    }
+
+    /* Descendent Selector */   //p bas div ke andar hona chahiye uske beech me kuch aur bhi ho sakta hai
+    div p {
+        background-color: brown;
+        color: blue
+    }
+    
+    /*Universal Selector*/
+    *{
+    margin:0;
+    padding: 0;
+    }
+
+    /*Pseuodo Selector*/
+
+
+    /*This is how we can use different type of selectors and give them class or id and apply css */
+</style> -->
+
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+    <!-- Note that it is recommended for styles to be defined in a separate file or files. The attribute and the <style> element have mainly the purpose of allowing for quick styling, for example for testing purposes. -->
+
+    <h1 style="background-color: purple;">Code Geass</h1>
+
+    <!-- This is para tag which is a block element so when I give background color it applies it the whole line but for inline element it will apply only to the space it takes but you can change the behavior of para and anchor tag on will-->
+    <h2>Heading 2</h2>
+    <h3>Heading 3</h3>
+    <!--Heading are from h1 to h6-->
+    <p style="color: yellow;">All Hail Lelouch vi Britannia.<br>
+        This is my first website</p>
+
+    <!-- Lorem10 command is used to get 10 random words printed so that we can do apply effects and see them without self writing big sentences -->
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, quam!</p>
+
+    <!-- a tag for is used for giving links, style tell what color to show when clicking and target is for opening a new tab everytime we click on link -->
+    <h3 style="color: red;">
+        <a target="_blank" style="background-color: red;"
+            href="https://www.cbr.com/code-geass-lelouch-lamperouge-zero-best-quotes/">Lelouch</a>
+        <!-- This is anchor tag which is an inline element it will apply only to the space it takes but for block element when I give background color it applies it the whole line but you can change the behavior of para and anchor tag on will -->
+    </h3>
+
+    <!-- Image tag is simple, src is so that you can get the source file, alt is to show alternate text of image in case the intended fails, width is to give width in terms of pixels and height for height (you can without giving width or height or width only or height only it doesnt matter but is recommended to use atleast one) -->
+    <img src="L and lelouch.jpg" alt="L and Lelouch Image" width="250" height="150">
+
+    <!-- table, tr is for table row and th is table head and td is table data -->
+    <table>
+        <caption>Skill Table</caption>
+        <tr style="color: yellow;">
+            <th rowspan="2">Name</th>
+            <th colspan="2">Languages</th>
+            <!--Colspan means that attribute with take space of two columns(horizontal) and same can be said for rowspan(vertical)-->
+            <th rowspan="2">Age</th>
+        </tr>
+        <tr style="color: yellow;">
+
+            <th>WebDev</th>
+            <th>DSA</th>
+
+        </tr>
+
+        <tr>
+            <td>Harry</td>
+            <td>JavaScript</td>
+            <td> C++ </td>
+            <td>30</td>
+        </tr>
+        <tr>
+            <td>Akshat</td>
+            <td>React</td>
+            <td>JAVA</td>
+            <td>18</td>
+        </tr>
+    </table>
+
+    <!-- List -->
+    <ul type="square">
+        <li>Harry</li>
+        <li>Lelouch</li>
+        <li>Light</li>
+    </ul>
+    <ol type="A">
+        <li>Harry</li>
+        <li>Lelouch</li>
+        <li>Light</li>
+    </ol>
+    <dl>
+        <dt>DL</dt>
+        <dd>It is used for giving definitions</dd>
+    </dl>
+    <!-- List -->
+    <script src="script.js"></script>
+    <!-- ID and Classes -->
+    <!-- Id are unique assigned to one element only but classes are not unique and each element can have multiple classes. Ids are also good for linking that when searching for a site I can use an id to go straight to that part of the website withour bothering with the rest of the page -->
+    <div id="firstdiv" class="firstclass bg yellow">
+        First ID and Class
+    </div>
+
+    <div>
+
+        <video src="lelouch2.mp4" width="400" muted controls poster="Photo.png" preload="auto"></video> <br>
+        <!-- autoplay and loop only works when muted is given because that is how modern browsers work, they prevent autoplay of non muted videos to make their websites less noisy-->
+        <!-- poster will not work if autoplay is there -->
+        <!-- src and width are self explainatory while autoplay is to autoplay the video once, muted to mute the video, controls to give controls to video, poster to apply a thumbnail -->
+
+        <audio src="Khudpe Yaqeen.mp3" controls preload="none"></audio> <br>
+        <!-- audio has all same attributes as video  -->
+        <!-- preload means when we want the website to fetch the data before,partial,all(none,metadata,auto) -->
+
+        <svg width="100" height="100">
+            <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />
+        </svg>
+
+        <img src="image.svg" alt="Sample SVG"> <br>
+
+        <!-- SVG files are Scalable Vector Graphics. Not pictures made of pixels but drawings made of math. -->
+        <!-- One is to take from an svg file and another is to do it in html -->
+
+        <iframe src="https://example.org" height="300"></iframe>
+        <!-- you can use youtube like this as well, all you need to do is click share embed then it will give you iframe codes -->
+    </div>
+
+    <div>
+        <!-- Semantic makes our file better by giving us tags to define what is the content and make it more understandable (refer to lcode with harry website for more tags and info)-->
+        <header>This is my header
+            <nav>
+                <ol>
+                    <li>first</li>
+                    <li>second</li>
+                    <li>third</li>
+                </ol>
+            </nav>
+        </header>
+        <main>This is the main. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt, modi! </main>
+        <footer>This is the foot part</footer>
+    </div>
+
+    <div>
+        To print symbols used in tags like less than, greater than, equal to we use Entities<br>
+        &lt;
+        &gt;
+        &amp;
+        &lt;p&gt;
+        &lt; br &gt; <br>
+
+        <pre>
+            Now all     the spaces will be considered as well
+        </pre>
+        Copyright &copy;&nbsp;&nbsp;&nbsp;&nbsp; Lelouch
+        <!-- nbsp adds a single space -->
+    </div>
+
+    <div>
+        
+    <style>h4{
+        color: yellow;
+    }</style>
+
+        <h3 style="color: red;">This is inline css</h3>
+        <h4>This is internal css</h4>
+        <h5>This is external css</h5>
+    </div>
+
+
+
+</body>
+
+
+</html>
