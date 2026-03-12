@@ -31,6 +31,25 @@
             border: 2px solid white;
             margin: 2px;
         }
+
+        .EventChild {
+            background-color: white;
+            color: black;
+            padding: 10px;
+            margin: 3px;
+        }
+
+        .EventChildContainer {
+            background-color: blue;
+            color: black;
+            padding: 5px;
+        }
+
+        .EventContainer {
+            background-color: yellow;
+            color: black;
+            padding: 10px;
+        }
     </style>
 
 </head>
@@ -72,6 +91,19 @@
         <div class="Box_1">'Box'1</div>
         <div class="Box_1">'Box'2</div>
         <div class="Box_1" id="bluebox" >'Box'3</div>
+    </div>
+
+    <div class="EventBtn">
+        <div class="eventbox">Hey I am a box</div>
+        <button id="btn">Change content</button>
+    </div>
+
+    <div class="EventContainer">
+        <section class="EventChildContainer">
+            <div class="EventChild">
+                I am an Event Child
+            </div>
+        </section>
     </div>
 
     <script>

@@ -1,0 +1,13 @@
+HTML
+CSS->tailwind css basic foundation
+JAVAScript + small project and(typescript optional ())
+node js + some projects
+ORM
+mySQL
+Replit for html in mobile
+
+
+amazon or any car company website clone
+jee form clone
+
+https://www.codewithharry.com/tutorial/html-home

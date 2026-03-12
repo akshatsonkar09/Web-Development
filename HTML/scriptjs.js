@@ -342,13 +342,15 @@ let divi = document.createElement("div")
 divi.setAttribute("class","created");
 y.insert;
 
-divi.innerHTML = "O have a box inserted" <b> "by Akshat" <b>
+divi.innerHTML = "I have a box inserted" <b> "by Akshat" <b>
 divi.setAttribute("class", "container") ;
 y.append;
 //You can refer cwh notes for more functions
 
-y.insertAdjacentHTML("afterend","I am over the water") 
-
+// METHOD - 2
+y.insertAdjacentHTML("afterend","I am under the water")
+y.insertAdjacentHTML("beforebegin","I am over the water")
+ 
 
 console.log(y.classList);
 console.log(y.className);
@@ -356,4 +358,98 @@ y.classList.add("Hello")
 y.classList.remove("Hello")
 y.classList.add("Hello")
 y.classList.toggle("Hello")
+
+console.log("EVENTS");
+let eventbutton = document.getElementById("btn")
+
+eventbutton.addEventListener("click" , ()=> { 
+    document.querySelector(".eventbox").innerHTML = "<b> Yay you were clicked</b> Enjoy your click"
+})
+
+//https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent is the list of all mouse events and you can search keyboard events and form events as well
+
+console.log("EVENT BUBBLING");      //VV IMPORTANT
+
+// Clicking on child only would be considered as clicking on child, child container and container. To stop that follow below 
+
+document.querySelector(".EventChild").addEventListener ("click", () => {
+    alert("Event child was clicked")
+})
+
+document.querySelector(".EventChildContainer").addEventListener ("click", () => {
+    e.stopPropagation()     //Using this we can stop the propagation of this class only
+    alert("Event Child Container was clicked")
+})
+
+document.querySelector(".EventContainer").addEventListener ("click", () => {
+    alert("Event Container was clicked")
+})
+
+//If I want something to happen repeatedly 
+
+function getRandomColor() {
+    let val1 = Math.ceil (0+Math.random()*255);
+    let val2 = Math.ceil (0+Math.random()*255);
+    let val3 = Math.ceil (0+Math.random()*255);
+    return `rgb(${val1}, ${val2}, ${val3})`
+}
+
+/*This is for infinite*/setInterval(() => { 
+document.querySelector(".EventChildContainer").style.background = getRandomColor(); }, 1000);
+
+
+/*This is for a set time*/setTimeout(() => { 
+document.querySelector(".EventChildContainer").style.background = getRandomColor(); }, 1000/*1 second*/);
+
+
+console.log("CALLBACK AND PROMISES");
+//THIS PART IS LEFT
+//THIS PART IS LEFT
+//THIS PART IS LEFT
+//THIS PART IS LEFT
+//THIS PART IS LEFT
+//THIS PART IS LEFT
+//THIS PART IS LEFT
+//THIS PART IS LEFT
+
+
+console.log("ERROR HANDLING");
+/*
+let no1 = prompt("Enter first number")      //This will take no. in string
+let no2 = prompt("Enter second number")
+
+if (isNaN(a) || isNaN(b)) {
+    throw SyntaxError("Sorry this is not allowed")
+}
+
+let sum1 = parseInt(a) + parseInt(b)     //This is for converting string into int
+
+console.log("The sum1 is ", sum1);        //This will give NaN but sometimes we need th Program to give error and handle it itself
+
+let sum2 = parseInt(a) + parseInt(b)
+
+try {
+    console.log("The sum2 is ", sum2);
+} catch (error) {
+    console.log("Error hai bhai")
+}
+//Now instead of showing that red error it will give us the message written in catch
+*/  
+//This part is commented because I will have to give numbers everytime I change code
+
+function check() {
+    let a = 1;
+try {
+    console.log("Yes number is 1");
+    return
+} catch (error) {
+    console.log("No number is not 1");
+    return
+}
+finally {
+    console.log("Even with return I am printed");
+}
+}
+
+console.log(check());
 
