@@ -305,7 +305,7 @@ document.querySelectorAll(".Box_1").forEach(e => {
 })
 
 let conti = document.getElementsByClassName("Box")
-console.log( conti[2].matches("#bluebox"))  //This # is used for id without # it will search for <bluebox> </bluebox>
+console.log(conti[2].matches("#bluebox"))  //This # is used for id without # it will search for <bluebox> </bluebox>
 console.log(conti[2].closest("#bluebox"))
 
 console.log(document.querySelector(".DOMContainer").contains(document.querySelector("body")))
@@ -319,7 +319,7 @@ console.log(y.innerHTML)
 console.log(y.outerHTML)
 console.log(x.innerHTML)
 console.log(x.outerHTML)
-console.log(x.innerText) 
+console.log(x.innerText)
 console.log(x.tagName)
 console.log(y.tagName)
 console.log(y.nodeName)
@@ -339,18 +339,18 @@ console.log(document.querySelector(".Box").dataset);
 console.log("WAYS TO INSERT")
 
 let divi = document.createElement("div")
-divi.setAttribute("class","created");
+divi.setAttribute("class", "created");
 y.insert;
 
-divi.innerHTML = "I have a box inserted" <b> "by Akshat" <b>
-divi.setAttribute("class", "container") ;
+divi.innerHTML = "I have a box inserted" < b > "by Akshat" < b >
+    divi.setAttribute("class", "container");
 y.append;
 //You can refer cwh notes for more functions
 
 // METHOD - 2
-y.insertAdjacentHTML("afterend","I am under the water")
-y.insertAdjacentHTML("beforebegin","I am over the water")
- 
+y.insertAdjacentHTML("afterend", "I am under the water")
+y.insertAdjacentHTML("beforebegin", "I am over the water")
+
 
 console.log(y.classList);
 console.log(y.className);
@@ -362,7 +362,7 @@ y.classList.toggle("Hello")
 console.log("EVENTS");
 let eventbutton = document.getElementById("btn")
 
-eventbutton.addEventListener("click" , ()=> { 
+eventbutton.addEventListener("click", () => {
     document.querySelector(".eventbox").innerHTML = "<b> Yay you were clicked</b> Enjoy your click"
 })
 
@@ -372,45 +372,149 @@ console.log("EVENT BUBBLING");      //VV IMPORTANT
 
 // Clicking on child only would be considered as clicking on child, child container and container. To stop that follow below 
 
-document.querySelector(".EventChild").addEventListener ("click", () => {
+document.querySelector(".EventChild").addEventListener("click", () => {
     alert("Event child was clicked")
 })
 
-document.querySelector(".EventChildContainer").addEventListener ("click", () => {
+document.querySelector(".EventChildContainer").addEventListener("click", () => {
     e.stopPropagation()     //Using this we can stop the propagation of this class only
     alert("Event Child Container was clicked")
 })
 
-document.querySelector(".EventContainer").addEventListener ("click", () => {
+document.querySelector(".EventContainer").addEventListener("click", () => {
     alert("Event Container was clicked")
 })
 
 //If I want something to happen repeatedly 
 
 function getRandomColor() {
-    let val1 = Math.ceil (0+Math.random()*255);
-    let val2 = Math.ceil (0+Math.random()*255);
-    let val3 = Math.ceil (0+Math.random()*255);
+    let val1 = Math.ceil(0 + Math.random() * 255);
+    let val2 = Math.ceil(0 + Math.random() * 255);
+    let val3 = Math.ceil(0 + Math.random() * 255);
     return `rgb(${val1}, ${val2}, ${val3})`
 }
 
-/*This is for infinite*/setInterval(() => { 
-document.querySelector(".EventChildContainer").style.background = getRandomColor(); }, 1000);
+/*This is for infinite*/setInterval(() => {
+    document.querySelector(".EventChildContainer").style.background = getRandomColor();
+}, 1000);
 
 
-/*This is for a set time*/setTimeout(() => { 
-document.querySelector(".EventChildContainer").style.background = getRandomColor(); }, 1000/*1 second*/);
+/*This is for a set time*/setTimeout(() => {
+    document.querySelector(".EventChildContainer").style.background = getRandomColor();
+}, 1000/*1 second*/);
 
 
 console.log("CALLBACK AND PROMISES");
-//THIS PART IS LEFT
-//THIS PART IS LEFT
-//THIS PART IS LEFT
-//THIS PART IS LEFT
-//THIS PART IS LEFT
-//THIS PART IS LEFT
-//THIS PART IS LEFT
-//THIS PART IS LEFT
+//Asynchronus nature of JS says that first everything will run and then the settimeout function will run even if they are written in between the lines (you can check console to check)
+console.log("Akshat is a Hacker");
+console.log(("Akshat is a heckler"));
+
+setTimeout(() => {
+    console.log("I am inside settimeout")
+}, 2000);
+
+const callback = (arg) => {
+    console.log(arg);
+}
+
+const loadScript = (src, callback) => {
+    let sc = document.createElement("script")
+    sc.src = src;
+    sc.onload = () => callback("Akshat Callback");
+    document.head.append(sc);
+}
+
+loadScript("https://cdnjs.cloudflare.com/ajax/libs/prism/9000.0.1/prism.min.js", callback)
+
+// Jist of callback is that we can pass function as variable using callback and can pass callback in callback as well but this can create dangerous nested callback
+
+console.log("This is Promise");
+
+let prom = new Promise((resolve, reject) => {
+
+    let a = Math.random();
+    if (a < 0.5) {
+        reject("No random number was not supporting you")
+    }
+    else {
+        setTimeout(() => {
+            console.log("Yes I am done")
+            resolve("Promise Resolved")
+        }, 3000);
+    }
+})
+
+prom.then((a) => {
+    console.log(a);
+}).catch((err) => {
+    console.log(err);
+})
+
+console.log("Promise using then");
+
+let prom1 = new Promise((resolve, reject) => {
+
+    let a = Math.random();
+    if (a < 0.5) {
+        reject("No random number was not supporting you 1")
+    }
+    else {
+        setTimeout(() => {
+            console.log("Yes I am done 1")
+            resolve("Promise Resolved 1")
+        }, 3000);
+    }
+})
+
+let p2 = Promise.all([prom, prom1])
+//Promise.allSettled
+p3.then(() => {
+    console.log(a);
+}).catch(err => {
+    console.log(err);
+})
+
+console.log("ASYNC/AWAIT & FETCH API");
+//Many time we dont want our code to proceed until a function is complete instead of it being done at the end/background
+
+async function getData1() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve(455)
+        }, 3500);
+    })
+}
+
+async function main1() {
+    console.log("Loading Module 1");
+    console.log("Program doing something 1");
+    let data = await getData1()      //now program will wait for function to finish before proceeding any further
+    console.log("data 1");
+    console.log("process data 1");
+    console.log("Procees to next task 1");
+}
+main1()
+
+async function getData2() {
+    let x = fetch('https://jsonplaceholder.typicode.com/todos/1')
+    let data = await x.json()
+    console.log(data);
+    return data
+}
+async function main2() {
+    console.log("Loading Module 2");
+    console.log("Program doing something 2");
+    let data = await getData2();      //now program will wait for function to finish before proceeding any further
+    console.log("data 2");
+    console.log("process data 2");
+    console.log("Procees to next task 2");
+}
+main2()
+
+// settle means resolve or reject
+// resolve means promise has settled successfully
+// reject means promise not has settled successfully
+
 
 
 console.log("ERROR HANDLING");
@@ -434,22 +538,22 @@ try {
     console.log("Error hai bhai")
 }
 //Now instead of showing that red error it will give us the message written in catch
-*/  
+*/
 //This part is commented because I will have to give numbers everytime I change code
 
 function check() {
     let a = 1;
-try {
-    console.log("Yes number is 1");
-    return
-} catch (error) {
-    console.log("No number is not 1");
-    return
-}
-finally {
-    console.log("Even with return I am printed");
-}
+    try {
+        console.log("Yes number is 1");
+        return
+    } catch (error) {
+        console.log("No number is not 1");
+        return
+    }
+    finally {
+        console.log("Even with return I am printed");
+    }
 }
 
-console.log(check());
 
+check();
