@@ -468,7 +468,7 @@ let prom1 = new Promise((resolve, reject) => {
 
 let p2 = Promise.all([prom, prom1])
 //Promise.allSettled
-p3.then(() => {
+p2.then(() => {
     console.log(a);
 }).catch(err => {
     console.log(err);
