@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>15-Day CampusX Deep Learning Schedule</title>
+  <style>
+    :root {
+      --bg: #fafaf8;
+      --card-bg: #ffffff;
+      --border: #e3e0d8;
+      --text-primary: #1f1d1a;
+      --text-secondary: #6b6660;
+      --accent: #b85c38;
+      --accent-soft: #f5e6dc;
+      --cx-bg: #e7f3ec;
+      --cx-text: #2c6b4f;
+      --done-bg: #f0f0ec;
+      --week-accent: #b85c38;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.5;
+      padding: 0 0 4rem;
+    }
+
+    .wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    header.hero {
+      padding: 2.5rem 1.25rem 2rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+    }
+
+    header.hero h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin: 0 0 0.4rem;
+      letter-spacing: -0.01em;
+    }
+
+    header.hero .sub {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 1.5rem;
+    }
+
+    .metric {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 8px;
+      text-align: center;
+    }
+
+    .metric .val {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .metric .lab {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-top: 2px;
+    }
+
+    .legend {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      justify-content: center;
+    }
+
+    .legend span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .ldot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .dot-cx {
+      background: var(--cx-text);
+    }
+
+    .week-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--week-accent);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin: 2rem 0 0.6rem;
+      padding-bottom: 4px;
+      border-bottom: 2px solid var(--accent-soft);
+    }
+
+    details.day {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 8px;
+      overflow: hidden;
+    }
+
+    details.day[open] {
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+    }
+
+    details.day.done {
+      background: var(--done-bg);
+    }
+
+    summary.day-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      cursor: pointer;
+      list-style: none;
+      user-select: none;
+    }
+
+    summary.day-head::-webkit-details-marker {
+      display: none;
+    }
+
+    summary.day-head:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .day-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 14px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .day-date {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .day-theme {
+      font-size: 0.88rem;
+      font-weight: 600;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .day-time {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .day-progress {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      min-width: 36px;
+      text-align: right;
+    }
+
+    .chev {
+      font-size: 0.7rem;
+      color: var(--text-secondary);
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+
+    details.day[open]>summary .chev {
+      transform: rotate(90deg);
+    }
+
+    .day-body {
+      padding: 0 14px 12px;
+    }
+
+    .vrow {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 7px 0;
+      border-top: 1px solid var(--border);
+      font-size: 0.82rem;
+    }
+
+    .vrow:first-child {
+      border-top: 1px solid var(--border);
+    }
+
+    .vrow input[type=checkbox] {
+      margin-top: 2px;
+      flex-shrink: 0;
+      width: 15px;
+      height: 15px;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .vrow.checked .vtitle {
+      color: var(--text-secondary);
+      text-decoration: line-through;
+    }
+
+    .src-tag {
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 1px 7px;
+      border-radius: 10px;
+      white-space: nowrap;
+      min-width: 56px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .src-tag.cx {
+      background: var(--cx-bg);
+      color: var(--cx-text);
+    }
+
+    .vdur {
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      min-width: 44px;
+      font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
+      padding-top: 1px;
+    }
+
+    .vtitle {
+      flex: 1;
+      color: var(--text-primary);
+    }
+
+    .controls {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin: 1.5rem 0;
+      flex-wrap: wrap;
+    }
+
+    .controls button {
+      font-size: 0.78rem;
+      padding: 7px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text-primary);
+      cursor: pointer;
+    }
+
+    .controls button:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+    }
+
+    .overall-progress-wrap {
+      margin-bottom: 1.5rem;
+    }
+
+    .overall-bar-bg {
+      background: var(--accent-soft);
+      border-radius: 8px;
+      height: 10px;
+      overflow: hidden;
+    }
+
+    .overall-bar-fill {
+      height: 10px;
+      background: var(--accent);
+      border-radius: 8px;
+      width: 0%;
+      transition: width 0.3s;
+    }
+
+    .overall-label {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      text-align: center;
+      margin-top: 6px;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      margin-top: 2.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    @media print {
+      .controls {
+        display: none;
+      }
+
+      details.day {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <header class="hero">
+      <h1>15-Day Deep Learning Schedule</h1>
+      <div class="sub">CampusX only — starting from MLP Notation</div>
+    </header>
+
+    <div class="summary-grid">
+      <div class="metric">
+        <div class="val">77</div>
+        <div class="lab">Videos</div>
+      </div>
+      <div class="metric">
+        <div class="val">47h 36m</div>
+        <div class="lab">Total time</div>
+      </div>
+      <div class="metric">
+        <div class="val">~3h 10m</div>
+        <div class="lab">Avg / day</div>
+      </div>
+      <div class="metric">
+        <div class="val">15</div>
+        <div class="lab">Days</div>
+      </div>
+    </div>
+
+    <div class="overall-progress-wrap">
+      <div class="overall-bar-bg">
+        <div class="overall-bar-fill" id="overallBar"></div>
+      </div>
+      <div class="overall-label" id="overallLabel">0 / 77 videos completed (0%)</div>
+    </div>
+
+    <div class="legend">
+      <span><span class="ldot dot-cx"></span> CampusX</span>
+    </div>
+
+    <div class="controls">
+      <button onclick="expandAll()">Expand all</button>
+      <button onclick="collapseAll()">Collapse all</button>
+      <button onclick="resetProgress()">Reset progress</button>
+    </div>
+    <div class="week-label">Week 1 — MLP, Backprop & Optimizers</div>
+    <details class="day" data-day="1" data-total="7" open>
+      <summary class="day-head"><span class="day-badge">Day 1</span><span class="day-date">16/06/26</span><span
+          class="day-theme">MLP, forward prop & first Keras projects</span><span class="day-time">3h 28m</span><span
+          class="day-progress" data-progress="1">0/7</span><span class="chev">▶</span></summary>
+      <div class="day-body">
+        <div class="vrow" data-vid="v1" data-day="1"><input type="checkbox" id="v1" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">13m</span><label for="v1" class="vtitle">MLP
+            Notation</label></div>
+        <div class="vrow" data-vid="v2" data-day="1"><input type="checkbox" id="v2" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">37m</span><label for="v2" class="vtitle">Multi Layer
+            Perceptron Intuition</label></div>
+        <div class="vrow" data-vid="v3" data-day="1"><input type="checkbox" id="v3" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">15m</span><label for="v3" class="vtitle">Forward
+            Propagation</label></div>
+        <div class="vrow" data-vid="v4" data-day="1"><input type="checkbox" id="v4" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">35m</span><label for="v4" class="vtitle">Customer Churn
+            Prediction using ANN | Keras & TensorFlow</label></div>
+        <div class="vrow" data-vid="v5" data-day="1"><input type="checkbox" id="v5" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">28m</span><label for="v5" class="vtitle">Handwritten
+            Digit Classification | MNIST</label></div>
+        <div class="vrow" data-vid="v6" data-day="1"><input type="checkbox" id="v6" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">17m</span><label for="v6" class="vtitle">Graduate
+            Admission Prediction using ANN</label></div>
+        <div class="vrow" data-vid="v7" data-day="1"><input type="checkbox" id="v7" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">59m</span><label for="v7" class="vtitle">Loss Functions
+            in Deep Learning</label></div>
+      </div>
+    </details>
+    <details class="day" data-day="2" data-total="5">
+      <summary class="day-head"><span class="day-badge">Day 2</span><span class="day-date">17/06/26</span><span
+          class="day-theme">Backpropagation complete</span><span class="day-time">3h 32m</span><span
+          class="day-progress" data-progress="2">0/5</span><span class="chev">▶</span></summary>
+      <div class="day-body">
+        <div class="vrow" data-vid="v8" data-day="2"><input type="checkbox" id="v8" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">54m</span><label for="v8" class="vtitle">Backpropagation
+            Part 1 — The What?</label></div>
+        <div class="vrow" data-vid="v9" data-day="2"><input type="checkbox" id="v9" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">59m</span><label for="v9" class="vtitle">Backpropagation
+            Part 2 — The How</label></div>
+        <div class="vrow" data-vid="v10" data-day="2"><input type="checkbox" id="v10" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">40m</span><label for="v10"
+            class="vtitle">Backpropagation Part 3 — The Why</label></div>
+        <div class="vrow" data-vid="v11" data-day="2"><input type="checkbox" id="v11" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">32m</span><label for="v11" class="vtitle">Vanishing &
+            Exploding Gradient Problem</label></div>
+        <div class="vrow" data-vid="v12" data-day="2"><input type="checkbox" id="v12" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">25m</span><label for="v12" class="vtitle">MLP
+            Memoization</label></div>
+      </div>
+    </details>
+    <details class="day" data-day="3" data-total="8">
+      <summary class="day-head"><span class="day-badge">Day 3</span><span class="day-date">18/06/26</span><span
+          class="day-theme">Gradient descent & regularization basics</span><span class="day-time">3h 45m</span><span
+          class="day-progress" data-progress="3">0/8</span><span class="chev">▶</span></summary>
+      <div class="day-body">
+        <div class="vrow" data-vid="v13" data-day="3"><input type="checkbox" id="v13" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">37m</span><label for="v13" class="vtitle">Gradient
+            Descent in NN | Batch vs SGD vs Mini-Batch</label></div>
+        <div class="vrow" data-vid="v14" data-day="3"><input type="checkbox" id="v14" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">30m</span><label for="v14" class="vtitle">How to Improve
+            Neural Network Performance</label></div>
+        <div class="vrow" data-vid="v15" data-day="3"><input type="checkbox" id="v15" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">12m</span><label for="v15" class="vtitle">Early
+            Stopping</label></div>
+        <div class="vrow" data-vid="v16" data-day="3"><input type="checkbox" id="v16" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">16m</span><label for="v16" class="vtitle">Data Scaling
+            in Neural Networks</label></div>
+        <div class="vrow" data-vid="v17" data-day="3"><input type="checkbox" id="v17" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">27m</span><label for="v17" class="vtitle">Dropout
+            Layer</label></div>
+        <div class="vrow" data-vid="v18" data-day="3"><input type="checkbox" id="v18" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">19m</span><label for="v18" class="vtitle">Dropout Code
+            Example</label></div>
+        <div class="vrow" data-vid="v19" data-day="3"><input type="checkbox" id="v19" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">35m</span><label for="v19" class="vtitle">Regularization
+            | L1 L2 | Weight Decay</label></div>
+        <div class="vrow" data-vid="v20" data-day="3"><input type="checkbox" id="v20" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">44m</span><label for="v20" class="vtitle">Activation
+            Functions | Sigmoid Tanh ReLU</label></div>
+      </div>
+    </details>
+    <details class="day" data-day="4" data-total="7">
+      <summary class="day-head"><span class="day-badge">Day 4</span><span class="day-date">19/06/26</span><span
+          class="day-theme">Activations, init & batch norm</span><span class="day-time">3h 47m</span><span
+          class="day-progress" data-progress="4">0/7</span><span class="chev">▶</span></summary>
+      <div class="day-body">
+        <div class="vrow" data-vid="v21" data-day="4"><input type="checkbox" id="v21" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">33m</span><label for="v21" class="vtitle">ReLU Variants
+            | Leaky, Parametric, ELU, SELU</label></div>
+        <div class="vrow" data-vid="v22" data-day="4"><input type="checkbox" id="v22" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">49m</span><label for="v22" class="vtitle">Weight
+            Initialization Techniques</label></div>
+        <div class="vrow" data-vid="v23" data-day="4"><input type="checkbox" id="v23" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">21m</span><label for="v23" class="vtitle">Xavier/Glorot
+            & He Initialization</label></div>
+        <div class="vrow" data-vid="v24" data-day="4"><input type="checkbox" id="v24" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">43m</span><label for="v24" class="vtitle">Batch
+            Normalization</label></div>
+        <div class="vrow" data-vid="v25" data-day="4"><input type="checkbox" id="v25" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">22m</span><label for="v25" class="vtitle">Optimizers
+            Part 1</label></div>
+        <div class="vrow" data-vid="v26" data-day="4"><input type="checkbox" id="v26" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">18m</span><label for="v26" class="vtitle">Exponentially
+            Weighted Moving Average</label></div>
+        <div class="vrow" data-vid="v27" data-day="4"><input type="checkbox" id="v27" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">38m</span><label for="v27" class="vtitle">SGD with
+            Momentum</label></div>
+      </div>
+    </details>
+    <div class="week-label">Week 2 — CNN & RNN Foundations</div>
+    <details class="day" data-day="5" data-total="7">
+      <summary class="day-head"><span class="day-badge">Day 5</span><span class="day-date">20/06/26</span><span
+          class="day-theme">Optimizers complete + CNN intro</span><span class="day-time">3h 17m</span><span
+          class="day-progress" data-progress="5">0/7</span><span class="chev">▶</span></summary>
+      <div class="day-body">
+        <div class="vrow" data-vid="v28" data-day="5"><input type="checkbox" id="v28" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">27m</span><label for="v28" class="vtitle">Nesterov
+            Accelerated Gradient (NAG)</label></div>
+        <div class="vrow" data-vid="v29" data-day="5"><input type="checkbox" id="v29" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">26m</span><label for="v29"
+            class="vtitle">AdaGrad</label></div>
+        <div class="vrow" data-vid="v30" data-day="5"><input type="checkbox" id="v30" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">12m</span><label for="v30"
+            class="vtitle">RMSProp</label></div>
+        <div class="vrow" data-vid="v31" data-day="5"><input type="checkbox" id="v31" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">12m</span><label for="v31" class="vtitle">Adam
+            Optimizer</label></div>
+        <div class="vrow" data-vid="v32" data-day="5"><input type="checkbox" id="v32" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">1h 05m</span><label for="v32" class="vtitle">Keras Tuner
+            | Hyperparameter Tuning</label></div>
+        <div class="vrow" data-vid="v33" data-day="5"><input type="checkbox" id="v33" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">25m</span><label for="v33" class="vtitle">Keras
+            Functional Model</label></div>
+        <div class="vrow" data-vid="v34" data-day="5"><input type="checkbox" id="v34" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">27m</span><label for="v34" class="vtitle">What is CNN?
+            Intuition</label></div>
+      </div>
+    </details>
+    <details class="day" data-day="6" data-total="8">
+      <summary class="day-head"><span class="day-badge">Day 6</span><span class="day-date">21/06/26</span><span
+          class="day-theme">CNN building blocks + backprop</span><span class="day-time">3h 34m</span><span
+          class="day-progress" data-progress="6">0/8</span><span class="chev">▶</span></summary>
+      <div class="day-body">
+        <div class="vrow" data-vid="v35" data-day="6"><input type="checkbox" id="v35" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">15m</span><label for="v35" class="vtitle">CNN vs Visual
+            Cortex | Cat Experiment</label></div>
+        <div class="vrow" data-vid="v36" data-day="6"><input type="checkbox" id="v36" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">29m</span><label for="v36" class="vtitle">Convolution
+            Operation</label></div>
+        <div class="vrow" data-vid="v37" data-day="6"><input type="checkbox" id="v37" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">24m</span><label for="v37" class="vtitle">Padding &
+            Strides</label></div>
+        <div class="vrow" data-vid="v38" data-day="6"><input type="checkbox" id="v38" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">27m</span><label for="v38" class="vtitle">Pooling Layer
+            | Max Pooling</label></div>
+        <div class="vrow" data-vid="v39" data-day="6"><input type="checkbox" id="v39" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">20m</span><label for="v39" class="vtitle">CNN
+            Architecture | LeNet-5</label></div>
+        <div class="vrow" data-vid="v40" data-day="6"><input type="checkbox" id="v40" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">17m</span><label for="v40" class="vtitle">CNN vs
+            ANN</label></div>
+        <div class="vrow" data-vid="v41" data-day="6"><input type="checkbox" id="v41" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">36m</span><label for="v41" class="vtitle">CNN
+            Backpropagation Part 1</label></div>
+        <div class="vrow" data-vid="v42" data-day="6"><input type="checkbox" id="v42" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">43m</span><label for="v42" class="vtitle">CNN
+            Backpropagation Part 2</label></div>
+      </div>
+    </details>
+    <details class="day" data-day="7" data-total="7">
+      <summary class="day-head"><span class="day-badge">Day 7</span><span class="day-date">22/06/26</span><span
+          class="day-theme">CNN projects, transfer learning + RNN intro</span><span class="day-time">3h 17m</span><span
+          class="day-progress" data-progress="7">0/7</span><span class="chev">▶</span></summary>
+      <div class="day-body">
+        <div class="vrow" data-vid="v43" data-day="7"><input type="checkbox" id="v43" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">27m</span><label for="v43" class="vtitle">Cat vs Dog
+            Image Classification Project</label></div>
+        <div class="vrow" data-vid="v44" data-day="7"><input type="checkbox" id="v44" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">26m</span><label for="v44" class="vtitle">Data
+            Augmentation</label></div>
+        <div class="vrow" data-vid="v45" data-day="7"><input type="checkbox" id="v45" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">24m</span><label for="v45" class="vtitle">Pretrained
+            Models | ImageNet | ILSVRC</label></div>
+        <div class="vrow" data-vid="v46" data-day="7"><input type="checkbox" id="v46" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">13m</span><label for="v46" class="vtitle">What Does a
+            CNN See?</label></div>
+        <div class="vrow" data-vid="v47" data-day="7"><input type="checkbox" id="v47" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">33m</span><label for="v47" class="vtitle">Transfer
+            Learning | Fine-Tuning vs Feature Extraction</label></div>
+        <div class="vrow" data-vid="v48" data-day="7"><input type="checkbox" id="v48" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">30m</span><label for="v48" class="vtitle">Why RNNs are
+            Needed | RNNs vs ANNs</label></div>
+        <div class="vrow" data-vid="v49" data-day="7"><input type="checkbox" id="v49" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">41m</span><label for="v49" class="vtitle">RNN
+            Architecture | Forward Propagation</label></div>
+      </div>
+    </details>
+    <details class="day" data-day="8" data-total="6">
+      <summary class="day-head"><span class="day-badge">Day 8</span><span class="day-date">23/06/26</span><span
+          class="day-theme">RNN problems → LSTM start</span><span class="day-time">3h 58m</span><span
+          class="day-progress" data-progress="8">0/6</span><span class="chev">▶</span></summary>
+      <div class="day-body">
+        <div class="vrow" data-vid="v50" data-day="8"><input type="checkbox" id="v50" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">36m</span><label for="v50" class="vtitle">RNN Sentiment
+            Analysis (code)</label></div>
+        <div class="vrow" data-vid="v51" data-day="8"><input type="checkbox" id="v51" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">22m</span><label for="v51" class="vtitle">Types of RNN |
+            Many-to-Many | One-to-Many</label></div>
+        <div class="vrow" data-vid="v52" data-day="8"><input type="checkbox" id="v52" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">33m</span><label for="v52"
+            class="vtitle">Backpropagation Through Time (BPTT)</label></div>
+        <div class="vrow" data-vid="v53" data-day="8"><input type="checkbox" id="v53" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">32m</span><label for="v53" class="vtitle">Problems with
+            RNN</label></div>
+        <div class="vrow" data-vid="v54" data-day="8"><input type="checkbox" id="v54" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">42m</span><label for="v54" class="vtitle">LSTM Part 1 —
+            The What?</label></div>
+        <div class="vrow" data-vid="v55" data-day="8"><input type="checkbox" id="v55" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">1h 10m</span><label for="v55" class="vtitle">LSTM Part 2
+            — Architecture</label></div>
+      </div>
+    </details>
+    <div class="week-label">Week 3 — Seq2Seq, Attention & Transformers</div>
+    <details class="day" data-day="9" data-total="3">
+      <summary class="day-head"><span class="day-badge">Day 9</span><span class="day-date">24/06/26</span><span
+          class="day-theme">LSTM complete + GRU + Deep RNNs</span><span class="day-time">3h 11m</span><span
+          class="day-progress" data-progress="9">0/3</span><span class="chev">▶</span></summary>
+      <div class="day-body">
+        <div class="vrow" data-vid="v56" data-day="9"><input type="checkbox" id="v56" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">1h 00m</span><label for="v56" class="vtitle">LSTM Part 3
+            — Next Word Predictor (code)</label></div>
+        <div class="vrow" data-vid="v57" data-day="9"><input type="checkbox" id="v57" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">1h 26m</span><label for="v57" class="vtitle">Gated
+            Recurrent Unit (GRU)</label></div>
+        <div class="vrow" data-vid="v58" data-day="9"><input type="checkbox" id="v58" onchange="toggleVideo(this)"><span
+            class="src-tag cx">CampusX</span><span class="vdur">45m</span><label for="v58" class="vtitle">Deep RNNs |
+            Stacked LSTMs & GRUs</label></div>
+      </div>
+    </details>
+    <details class="day" data-day="10" data-total="4">
+      <summary class="day-head"><span class="day-badge">Day 10</span><span class="day-date">25/06/26</span><span
+          class="day-theme">Bidirectional RNN, LLM history & seq2seq</span><span class="day-time">3h 47m</span><span
+          class="day-progress" data-progress="10">0/4</span><span class="chev">▶</span></summary>
+      <div class="day-body">
+        <div class="vrow" data-vid="v59" data-day="10"><input type="checkbox" id="v59"
+            onchange="toggleVideo(this)"><span class="src-tag cx">CampusX</span><span class="vdur">25m</span><label
+            for="v59" class="vtitle">Bidirectional RNN | BiLSTM</label></div>
+        <div class="vrow" data-vid="v60" data-day="10"><input type="checkbox" id="v60"
+            onchange="toggleVideo(this)"><span class="src-tag cx">CampusX</span><span class="vdur">1h 27m</span><label
+            for="v60" class="vtitle">Epic History of LLMs | LSTMs to ChatGPT</label></div>
+        <div class="vrow" data-vid="v61" data-day="10"><input type="checkbox" id="v61"
+            onchange="toggleVideo(this)"><span class="src-tag cx">CampusX</span><span class="vdur">1h 13m</span><label
+            for="v61" class="vtitle">Encoder Decoder | Seq2Seq Architecture</label></div>
+        <div class="vrow" data-vid="v62" data-day="10"><input type="checkbox" id="v62"
+            onchange="toggleVideo(this)"><span class="src-tag cx">CampusX</span><span class="vdur">41m</span><label
+            for="v62" class="vtitle">Attention Mechanism</label></div>
+      </div>
+    </details>
+    <details class="day" data-day="11" data-total="4">
+      <summary class="day-head"><span class="day-badge">Day 11</span><span class="day-date">26/06/26</span><span
+          class="day-theme">Attention variants + Transformer intro</span><span class="day-time">3h 39m</span><span
+          class="day-progress" data-progress="11">0/4</span><span class="chev">▶</span></summary>
+      <div class="day-body">
+        <div class="vrow" data-vid="v63" data-day="11"><input type="checkbox" id="v63"
+            onchange="toggleVideo(this)"><span class="src-tag cx">CampusX</span><span class="vdur">52m</span><label
+            for="v63" class="vtitle">Bahdanau vs Luong Attention</label></div>
+        <div class="vrow" data-vid="v64" data-day="11"><input type="checkbox" id="v64"
+            onchange="toggleVideo(this)"><span class="src-tag cx">CampusX</span><span class="vdur">1h 00m</span><label
+            for="v64" class="vtitle">Introduction to Transformers</label></div>
+        <div class="vrow" data-vid="v65" data-day="11"><input type="checkbox" id="v65"
+            onchange="toggleVideo(this)"><span class="src-tag cx">CampusX</span><span class="vdur">23m</span><label
+            for="v65" class="vtitle">What is Self-Attention?</label></div>
+        <div class="vrow" data-vid="v66" data-day="11"><input type="checkbox" id="v66"
+            onchange="toggleVideo(this)"><span class="src-tag cx">CampusX</span><span class="vdur">1h 23m</span><label
+            for="v66" class="vtitle">Self-Attention with Code</label></div>
+      </div>
+    </details>
+    <details class="day" data-day="12" data-total="5">
+      <summary class="day-head"><span class="day-badge">Day 12</span><span class="day-date">27/06/26</span><span
+          class="day-theme">Scaled attention, multi-head & positional encoding</span><span class="day-time">3h
+          25m</span><span class="day-progress" data-progress="12">0/5</span><span class="chev">▶</span></summary>
+      <div class="day-body">
+        <div class="vrow" data-vid="v67" data-day="12"><input type="checkbox" id="v67"
+            onchange="toggleVideo(this)"><span class="src-tag cx">CampusX</span><span class="vdur">50m</span><label
+            for="v67" class="vtitle">Scaled Dot Product Attention | Why Scale?</label></div>
+        <div class="vrow" data-vid="v68" data-day="12"><input type="checkbox" id="v68"
+            onchange="toggleVideo(this)"><span class="src-tag cx">CampusX</span><span class="vdur">20m</span><label
+            for="v68" class="vtitle">Self-Attention Geometric Intuition</label></div>
+        <div class="vrow" data-vid="v69" data-day="12"><input type="checkbox" id="v69"
+            onchange="toggleVideo(this)"><span class="src-tag cx">CampusX</span><span class="vdur">22m</span><label
+            for="v69" class="vtitle">Why is Self-Attention Called "Self"?</label></div>
+        <div class="vrow" data-vid="v70" data-day="12"><input type="checkbox" id="v70"
+            onchange="toggleVideo(this)"><span class="src-tag cx">CampusX</span><span class="vdur">38m</span><label
+            for="v70" class="vtitle">Multi-Head Attention</label></div>
+        <div class="vrow" data-vid="v71" data-day="12"><input type="checkbox" id="v71"
+            onchange="toggleVideo(this)"><span class="src-tag cx">CampusX</span><span class="vdur">1h 13m</span><label
+            for="v71" class="vtitle">Positional Encoding</label></div>
+      </div>
+    </details>
+    <div class="week-label">Days 13–15 — Transformer Decoder & Wrap-up</div>
+    <details class="day" data-day="13" data-total="2">
+      <summary class="day-head"><span class="day-badge">Day 13</span><span class="day-date">28/06/26</span><span
+          class="day-theme">Layer norm + Transformer encoder</span><span class="day-time">1h 40m</span><span
+          class="day-progress" data-progress="13">0/2</span><span class="chev">▶</span></summary>
+      <div class="day-body">
+        <div class="vrow" data-vid="v72" data-day="13"><input type="checkbox" id="v72"
+            onchange="toggleVideo(this)"><span class="src-tag cx">CampusX</span><span class="vdur">46m</span><label
+            for="v72" class="vtitle">Layer Normalization</label></div>
+        <div class="vrow" data-vid="v73" data-day="13"><input type="checkbox" id="v73"
+            onchange="toggleVideo(this)"><span class="src-tag cx">CampusX</span><span class="vdur">54m</span><label
+            for="v73" class="vtitle">Transformer Encoder Architecture</label></div>
+      </div>
+    </details>
+    <details class="day" data-day="14" data-total="2">
+      <summary class="day-head"><span class="day-badge">Day 14</span><span class="day-date">29/06/26</span><span
+          class="day-theme">Masked self-attention + cross attention</span><span class="day-time">1h 34m</span><span
+          class="day-progress" data-progress="14">0/2</span><span class="chev">▶</span></summary>
+      <div class="day-body">
+        <div class="vrow" data-vid="v74" data-day="14"><input type="checkbox" id="v74"
+            onchange="toggleVideo(this)"><span class="src-tag cx">CampusX</span><span class="vdur">1h 00m</span><label
+            for="v74" class="vtitle">Masked Self-Attention | Decoder Part 1</label></div>
+        <div class="vrow" data-vid="v75" data-day="14"><input type="checkbox" id="v75"
+            onchange="toggleVideo(this)"><span class="src-tag cx">CampusX</span><span class="vdur">34m</span><label
+            for="v75" class="vtitle">Cross Attention in Transformers</label></div>
+      </div>
+    </details>
+    <details class="day" data-day="15" data-total="2">
+      <summary class="day-head"><span class="day-badge">Day 15</span><span class="day-date">30/06/26</span><span
+          class="day-theme">Transformer decoder + inference</span><span class="day-time">1h 33m</span><span
+          class="day-progress" data-progress="15">0/2</span><span class="chev">▶</span></summary>
+      <div class="day-body">
+        <div class="vrow" data-vid="v76" data-day="15"><input type="checkbox" id="v76"
+            onchange="toggleVideo(this)"><span class="src-tag cx">CampusX</span><span class="vdur">48m</span><label
+            for="v76" class="vtitle">Transformer Decoder Architecture</label></div>
+        <div class="vrow" data-vid="v77" data-day="15"><input type="checkbox" id="v77"
+            onchange="toggleVideo(this)"><span class="src-tag cx">CampusX</span><span class="vdur">45m</span><label
+            for="v77" class="vtitle">Transformer Inference</label></div>
+      </div>
+    </details>
+
+    <footer>
+      Total videos: 77 &nbsp;•&nbsp; Progress is saved automatically in this browser
+      &nbsp;•&nbsp; Generated for schedule starting 16/06/26
+    </footer>
+
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'dl_roadmap_15day_progress_v1';
+
+    function loadProgress() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+      } catch (e) { return {}; }
+    }
+
+    function saveProgress(data) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    function updateDayProgress(dayNum) {
+      const rows = document.querySelectorAll(`.vrow[data-day="${dayNum}"]`);
+      let checked = 0;
+      rows.forEach(r => {
+        if (r.querySelector('input').checked) checked++;
+      });
+      const progEl = document.querySelector(`[data-progress="${dayNum}"]`);
+      if (progEl) progEl.textContent = `${checked}/${rows.length}`;
+
+      const dayEl = document.querySelector(`details.day[data-day="${dayNum}"]`);
+      if (dayEl) {
+        if (checked === rows.length && rows.length > 0) {
+          dayEl.classList.add('done');
+        } else {
+          dayEl.classList.remove('done');
+        }
+      }
+    }
+
+    function updateOverall() {
+      const all = document.querySelectorAll('.vrow input[type=checkbox]');
+      let checked = 0;
+      all.forEach(c => { if (c.checked) checked++; });
+      const total = all.length;
+      const pct = total ? Math.round((checked / total) * 100) : 0;
+      document.getElementById('overallBar').style.width = pct + '%';
+      document.getElementById('overallLabel').textContent = `${checked} / ${total} videos completed (${pct}%)`;
+    }
+
+    function toggleVideo(checkbox) {
+      const data = loadProgress();
+      data[checkbox.id] = checkbox.checked;
+      saveProgress(data);
+
+      const row = checkbox.closest('.vrow');
+      row.classList.toggle('checked', checkbox.checked);
+
+      const dayNum = row.getAttribute('data-day');
+      updateDayProgress(dayNum);
+      updateOverall();
+    }
+
+    function expandAll() {
+      document.querySelectorAll('details.day').forEach(d => d.open = true);
+    }
+    function collapseAll() {
+      document.querySelectorAll('details.day').forEach(d => d.open = false);
+    }
+    function resetProgress() {
+      if (!confirm('Reset all progress? This cannot be undone.')) return;
+      localStorage.removeItem(STORAGE_KEY);
+      document.querySelectorAll('.vrow input[type=checkbox]').forEach(c => {
+        c.checked = false;
+        c.closest('.vrow').classList.remove('checked');
+      });
+      document.querySelectorAll('details.day').forEach(d => {
+        d.classList.remove('done');
+        const dayNum = d.getAttribute('data-day');
+        const total = d.getAttribute('data-total');
+        const progEl = document.querySelector(`[data-progress="${dayNum}"]`);
+        if (progEl) progEl.textContent = `0/${total}`;
+      });
+      updateOverall();
+    }
+
+    (function init() {
+      const data = loadProgress();
+      document.querySelectorAll('.vrow input[type=checkbox]').forEach(c => {
+        if (data[c.id]) {
+          c.checked = true;
+          c.closest('.vrow').classList.add('checked');
+        }
+      });
+      document.querySelectorAll('details.day').forEach(d => {
+        updateDayProgress(d.getAttribute('data-day'));
+      });
+      updateOverall();
+    })();
+  </script>
+</body>
+
+</html>
